@@ -1,0 +1,36 @@
+{
+  "id": "sine-pinned-folder-colors",
+  "name": "Pinned Folder Colors",
+  "description": "Adds workspace-derived color palettes to Zen pinned folders and their descendants.",
+  "author": "Tom Bar-Gal",
+  "version": "0.1.0",
+  "createdAt": "2026-07-17",
+  "updatedAt": "2026-07-17",
+  "homepage": "https://github.com/dehyde/sine-mods/tree/main/mods/sine-pinned-folder-colors",
+  "readme": "https://raw.githubusercontent.com/dehyde/sine-mods/main/mods/sine-pinned-folder-colors/README.md",
+  "ai": "yes",
+  "js": true,
+  "supportsUnload": true,
+  "style": {
+    "chrome": "chrome.css"
+  },
+  "scripts": {
+    "scripts/pinned-folder-colors.uc.js": {
+      "include": [
+        "chrome://browser/content/browser.xhtml"
+      ],
+      "loadOrder": 1
+    }
+  },
+  "tags": [
+    "colors",
+    "folders",
+    "pinned-tabs",
+    "zen",
+    "sine"
+  ],
+  "fork": [
+    "zen"
+  ],
+  "preferences": "preferences.json"
+}

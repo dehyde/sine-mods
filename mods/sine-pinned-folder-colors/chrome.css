@@ -1,0 +1,91 @@
+zen-folder[data-sine-pinned-folder-color]
+  > .tab-group-label-container
+  > .tab-group-folder-icon {
+  --zen-folder-behind-bgcolor: light-dark(
+    color-mix(
+      in srgb,
+      var(--sine-pinned-folder-color)
+        var(--sine-pinned-folder-behind-strength, 76%),
+      gray
+    ),
+    color-mix(
+      in srgb,
+      var(--sine-pinned-folder-color)
+        var(--sine-pinned-folder-behind-strength, 76%),
+      #c1c1c1
+    )
+  );
+  --zen-folder-front-bgcolor: light-dark(
+    color-mix(
+      in srgb,
+      var(--sine-pinned-folder-color)
+        var(--sine-pinned-folder-front-light-strength, 58%),
+      white
+    ),
+    color-mix(
+      in srgb,
+      var(--sine-pinned-folder-color)
+        var(--sine-pinned-folder-front-dark-strength, 76%),
+      black
+    )
+  );
+  --zen-folder-stroke: light-dark(
+    color-mix(in srgb, var(--sine-pinned-folder-color) 50%, black),
+    color-mix(in srgb, var(--zen-colors-primary) 15%, #ebebeb)
+  );
+}
+
+:root[sine-pinned-folder-colors-connectors="true"]
+  zen-folder[data-sine-pinned-folder-color]
+  > .tab-group-container
+  > .tree-connector
+  .connector-visible {
+  stroke: var(--sine-pinned-folder-color) !important;
+}
+
+#sine-pinned-folder-colors-popup {
+  --panel-padding: 0;
+  position: relative !important;
+  min-width: 122px !important;
+  width: 122px !important;
+  min-height: 122px !important;
+  height: 122px !important;
+  padding: 0 !important;
+}
+
+.sine-pinned-folder-color-swatch {
+  appearance: none !important;
+  position: absolute !important;
+  min-width: 30px !important;
+  width: 30px !important;
+  height: 30px !important;
+  margin: 0 !important;
+  padding: 4px !important;
+  border: 1px solid transparent !important;
+  border-radius: 7px !important;
+}
+
+.sine-pinned-folder-color-swatch::before,
+.sine-pinned-folder-color-swatch::after {
+  display: none !important;
+}
+
+.sine-pinned-folder-color-swatch:hover {
+  background-color: color-mix(in srgb, currentColor 12%, transparent) !important;
+}
+
+.sine-pinned-folder-color-swatch[selected] {
+  border-color: currentColor !important;
+  background-color: color-mix(in srgb, currentColor 16%, transparent) !important;
+}
+
+.sine-pinned-folder-color-swatch .menu-iconic-icon {
+  width: 18px !important;
+  height: 18px !important;
+  margin: 0 !important;
+}
+
+.sine-pinned-folder-color-swatch .menu-iconic-text,
+.sine-pinned-folder-color-swatch .menu-accel-container {
+  display: none !important;
+}

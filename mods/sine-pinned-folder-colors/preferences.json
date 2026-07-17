@@ -1,0 +1,29 @@
+[
+  {
+    "type": "dropdown",
+    "label": "Color intensity",
+    "property": "sine.pinned-folder-colors.intensity",
+    "value": "number",
+    "defaultValue": 40,
+    "placeholder": false,
+    "options": [
+      { "label": "Native — 0%", "value": 0 },
+      { "label": "Subtle — 20%", "value": 20 },
+      { "label": "Balanced — 40%", "value": 40 },
+      { "label": "Strong — 60%", "value": 60 },
+      { "label": "Vivid — 80%", "value": 80 }
+    ]
+  },
+  {
+    "type": "checkbox",
+    "label": "Adjust generated colors for sidebar contrast",
+    "property": "sine.pinned-folder-colors.contrast-aware",
+    "defaultValue": false
+  },
+  {
+    "type": "checkbox",
+    "label": "Color Zen Folder Tree Connectors when that mod is enabled",
+    "property": "sine.pinned-folder-colors.color-tree-connectors",
+    "defaultValue": true
+  }
+]
