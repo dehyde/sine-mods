@@ -10,7 +10,7 @@ When collapsed folders are temporarily showing active tabs, selecting another ta
 
 The mod also includes an enabled-by-default **Collapse child folders when a parent closes** setting. Disable it from the mod's **Open settings** panel when you want a parent folder to remember which nested folders were open.
 
-The mod uses Zen's own folder-collapse behavior and does not modify Zen source files.
+The mod uses Zen's own folder-collapse behavior, supports both the current and legacy Zen folder APIs, and does not modify Zen source files.
 
 ## Install
 

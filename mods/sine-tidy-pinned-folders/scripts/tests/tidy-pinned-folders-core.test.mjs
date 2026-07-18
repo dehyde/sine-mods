@@ -8,6 +8,7 @@ import {
   getPinnedFolderDescendants,
   getPinnedFolderForTab,
   getPinnedFolderSiblings,
+  getPinnedFolderUnloadController,
   getPinnedFoldersToCollapse,
   getPinnedFoldersToCollapseForSelection,
   isPinnedZenFolder,
@@ -175,6 +176,32 @@ test("finds every stale active tab outside the current selection", () => {
       inactiveTab,
     ]),
     [staleFirst, staleSecond]
+  );
+});
+
+test("uses the current Zen folder controller and supports the legacy API", () => {
+  const currentController = { animateUnload() {} };
+  const legacyController = { animateUnload() {} };
+
+  assert.equal(
+    getPinnedFolderUnloadController({
+      gZenFolders: currentController,
+      gZenLiveFoldersUI: legacyController,
+    }),
+    currentController
+  );
+  assert.equal(
+    getPinnedFolderUnloadController({
+      gZenLiveFoldersUI: legacyController,
+    }),
+    legacyController
+  );
+  assert.equal(
+    getPinnedFolderUnloadController({
+      gZenFolders: {},
+      gZenLiveFoldersUI: {},
+    }),
+    null
   );
 });
 

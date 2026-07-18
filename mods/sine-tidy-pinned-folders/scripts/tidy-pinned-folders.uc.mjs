@@ -3,6 +3,7 @@ import {
   getPinnedActiveTabsToUnload,
   getPinnedFolderDescendants,
   getPinnedFolderForTab,
+  getPinnedFolderUnloadController,
   getPinnedFoldersToCollapse,
   getPinnedFoldersToCollapseForSelection,
   isPinnedZenFolder,
@@ -75,14 +76,25 @@ class SineTidyPinnedFolders {
             ".tabbrowser-tab[folder-active]"
           )
         );
-        for (const activeTab of getPinnedActiveTabsToUnload(
+        const tabsToUnload = getPinnedActiveTabsToUnload(
           selectedTab,
           activeTabs
-        )) {
-          await this.window.gZenLiveFoldersUI.animateUnload(
-            getPinnedFolderForTab(activeTab),
-            activeTab
-          );
+        );
+        const unloadController = getPinnedFolderUnloadController(this.window);
+
+        if (tabsToUnload.length && !unloadController) {
+          console.error(`${LOG_PREFIX} Zen folder unload API is unavailable.`);
+        } else {
+          for (const activeTab of tabsToUnload) {
+            try {
+              await unloadController.animateUnload(
+                getPinnedFolderForTab(activeTab),
+                activeTab
+              );
+            } catch (error) {
+              console.error(`${LOG_PREFIX} Could not hide a stale active tab:`, error);
+            }
+          }
         }
 
         const pinnedFolders = Array.from(
@@ -92,7 +104,10 @@ class SineTidyPinnedFolders {
           getPinnedFoldersToCollapseForSelection(selectedTab, pinnedFolders)
         );
       } catch (error) {
-        console.error(`${LOG_PREFIX} Could not tidy folders after tab selection:`, error);
+        console.error(
+          `${LOG_PREFIX} Could not tidy folders after tab selection:`,
+          error
+        );
       }
     });
   };

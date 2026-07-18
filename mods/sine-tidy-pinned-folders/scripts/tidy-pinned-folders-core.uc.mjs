@@ -58,6 +58,19 @@ export function getPinnedActiveTabsToUnload(selectedTab, tabs) {
   );
 }
 
+export function getPinnedFolderUnloadController(windowRef) {
+  const controllers = [
+    windowRef?.gZenFolders,
+    windowRef?.gZenLiveFoldersUI,
+  ];
+
+  return (
+    controllers.find(
+      controller => typeof controller?.animateUnload === "function"
+    ) ?? null
+  );
+}
+
 export function getPinnedFoldersToCollapse(openedFolder) {
   return [
     ...new Set(
