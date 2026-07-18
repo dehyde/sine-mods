@@ -1,7 +1,10 @@
 import {
   collapsePinnedFolders,
+  getPinnedActiveTabsToUnload,
   getPinnedFolderDescendants,
+  getPinnedFolderForTab,
   getPinnedFoldersToCollapse,
+  getPinnedFoldersToCollapseForSelection,
   isPinnedZenFolder,
 } from "./tidy-pinned-folders-core.uc.mjs";
 
@@ -22,6 +25,9 @@ class SineTidyPinnedFolders {
       signal: this.#abortController.signal,
     });
     this.window.addEventListener("TabGroupCollapse", this.#onFolderCollapse, {
+      signal: this.#abortController.signal,
+    });
+    this.window.addEventListener("TabSelect", this.#onTabSelect, {
       signal: this.#abortController.signal,
     });
   }
@@ -57,6 +63,38 @@ class SineTidyPinnedFolders {
     } catch (error) {
       console.error(LOG_PREFIX + " Could not collapse child folders:", error);
     }
+  };
+
+  #onTabSelect = event => {
+    const selectedTab = event.target;
+
+    this.window.requestAnimationFrame(async () => {
+      try {
+        const activeTabs = Array.from(
+          this.window.document.querySelectorAll(
+            ".tabbrowser-tab[folder-active]"
+          )
+        );
+        for (const activeTab of getPinnedActiveTabsToUnload(
+          selectedTab,
+          activeTabs
+        )) {
+          await this.window.gZenLiveFoldersUI.animateUnload(
+            getPinnedFolderForTab(activeTab),
+            activeTab
+          );
+        }
+
+        const pinnedFolders = Array.from(
+          this.window.document.querySelectorAll("zen-folder")
+        ).filter(isPinnedZenFolder);
+        collapsePinnedFolders(
+          getPinnedFoldersToCollapseForSelection(selectedTab, pinnedFolders)
+        );
+      } catch (error) {
+        console.error(`${LOG_PREFIX} Could not tidy folders after tab selection:`, error);
+      }
+    });
   };
 }
 
